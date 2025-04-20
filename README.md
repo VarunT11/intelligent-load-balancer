@@ -1,4 +1,4 @@
-# Intelligent Load Balancer
+# BalancePro: Intelligent Load Balancing Engine
 
 An **Intelligent Load Balancer** built using **Java (Spring Boot)** and **React** that supports advanced traffic routing strategies, health checks, circuit breaking, canary deployments, real-time metrics, and admin configurability via a UI dashboard.
 
