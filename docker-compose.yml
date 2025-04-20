@@ -1,0 +1,42 @@
+services:
+  load-balancer:
+    build:
+      context: ./intelligent-load-balancer-backend
+    container_name: intelligent-load-balancer-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/loadbalancerdb
+      SPRING_DATASOURCE_USERNAME: lbadmin
+      SPRING_DATASOURCE_PASSWORD: lbpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      API_ADMIN_USERNAME: admin
+      API_ADMIN_PASSWORD: Welcome1
+    depends_on:
+      - postgres
+    restart: always
+
+  ui:
+    build:
+      context: ./intelligent-load-balancer-ui
+    container_name: intelligent-load-balancer-ui
+    ports:
+      - "3000:80"
+    depends_on:
+      - load-balancer
+    restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: loadbalancerdb
+      POSTGRES_USER: lbadmin
+      POSTGRES_PASSWORD: lbpassword
+    ports:
+      - "5432:5432"
+
+networks:
+  default:
+    external:
+      name: load-test-network
